@@ -1,0 +1,30 @@
+.navbar {
+    background: $primary;
+
+    .nav-link {
+        color: $white;
+
+        &:hover, &:active {
+            color: $grey-3;
+        }
+    }
+
+    li {
+        color: $white;
+    }
+}
+
+.navbar-brand {
+    color: $white;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 28px;
+
+    &:hover, &:active {
+        color: $white;
+    }
+
+    img {
+        width: 25px;
+    }
+}
