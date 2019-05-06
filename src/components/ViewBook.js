@@ -34,7 +34,7 @@ class ViewBook extends Component {
         // console.log(book);
 
         return (
-            <div className={'col-8 mx-auto'}>
+            <div className={'col-xs-12 col-md-8 mx-auto'}>
                 <div className={'jumbotron my-3 pt-4 pb-3 shadow bg-white'}>
                     <h1 className={'display-4'}>{book.title}</h1>
                     <p className={'lead'}>{book.description}</p>

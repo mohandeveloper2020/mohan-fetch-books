@@ -137,12 +137,12 @@ class AddBooks extends Component {
             <div className={'container-fluid mt-4'}>
                 <Link
                     to={'/'}
-                    className={'btn btn-sm btn-outline-secondary float-right'}>
+                    className={'btn btn-sm btn-outline-secondary float-right d-none d-md-block'}>
                         <i className={'fas fa-arrow-left mr-2'}></i>
                         {'Back to List'}
                 </Link>
 
-                <div className={'col-4 mx-auto bg-white p-3 rounded-lg shadow'}>
+                <div className={'col-xs-12 col-md-4 mx-auto bg-white p-3 rounded-lg shadow'}>
                     <h4 className={'text-center'}>
                         {book_id ? 'Update this book' : 'Add new book'}
                     </h4>

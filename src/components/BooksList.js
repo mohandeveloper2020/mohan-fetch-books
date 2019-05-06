@@ -71,7 +71,7 @@ class BooksList extends Component {
 
                 <div className={'row'}>
                     {books && books.map((book, ind) =>
-                        <div className={'col-4 my-3'} key={ind}>
+                        <div className={'col-xs-12 col-md-4 my-3'} key={ind}>
                             <div className={'card shadow'}>
                                 <div className={'card-header'}>
                                     <h5 className={'mb-0'}>{book.title}</h5>
