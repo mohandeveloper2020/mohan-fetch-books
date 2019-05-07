@@ -43,6 +43,40 @@ class AddBooks extends Component {
         });
     };
 
+    handleAddEdit(m, s) {
+        let { title } = this.state;
+
+        if (m && m.length) {
+            // console.log(title);
+            alert(`${m.join(', ')} - ${title}`);
+
+            this.setState({
+                busy: false
+            })
+
+            // to highlight the empty field with foucs
+            let { titleInput, descInput, authorInput } = this.refs;
+
+            if(titleInput.value === '') {
+                ReactDOM.findDOMNode(titleInput).focus();
+            } else if(descInput.value === '') {
+                ReactDOM.findDOMNode(descInput).focus();
+            } else if(authorInput.value === '') {
+                ReactDOM.findDOMNode(authorInput).focus();
+            }
+
+            if (s === 's') {
+                this.setState({
+                    title: '',
+                    description: '',
+                    author: ''
+                });
+
+                this.props.history.push(`/`);
+            }
+        }
+    }
+
     handleSubmit(e) {
         e.preventDefault();
 
@@ -59,35 +93,7 @@ class AddBooks extends Component {
                 data: { book_id, title, description, author }
             }).then(({ m, s })=> {
 
-                if (m && m.length) {
-                    // console.log(title);
-                    alert(`${m.join(', ')} - ${title}`);
-
-                    this.setState({
-                        busy: false
-                    })
-
-                    // to highlight the empty field with foucs
-                    let {titleInput, descInput, authorInput } = this.refs;
-
-                    if(titleInput.value === '') {
-                        ReactDOM.findDOMNode(titleInput).focus();
-                    } else if(descInput.value === '') {
-                        ReactDOM.findDOMNode(descInput).focus();
-                    } else if(authorInput.value === '') {
-                        ReactDOM.findDOMNode(authorInput).focus();
-                    }
-
-                    if (s === 's') {
-                        this.setState({
-                            title: '',
-                            description: '',
-                            author: ''
-                        });
-
-                        this.props.history.push(`/`);
-                    }
-                }
+                this.handleAddEdit(m, s);
             });
 
         } else {
@@ -97,35 +103,7 @@ class AddBooks extends Component {
                 data: { title, description, author }
             }).then(({ m, s })=> {
                 
-                if (m && m.length) {
-                    // console.log(title);
-                    alert(`${m.join(', ')} - ${title}`);
-
-                    this.setState({
-                        busy: false
-                    })
-
-                    // to highlight the empty field with foucs
-                    let {titleInput, descInput, authorInput } = this.refs;
-
-                    if(titleInput.value === '') {
-                        ReactDOM.findDOMNode(titleInput).focus();
-                    } else if(descInput.value === '') {
-                        ReactDOM.findDOMNode(descInput).focus();
-                    } else if(authorInput.value === '') {
-                        ReactDOM.findDOMNode(authorInput).focus();
-                    }
-
-                    if (s === 's') {
-                        this.setState({
-                            title: '',
-                            description: '',
-                            author: ''
-                        });
-
-                        this.props.history.push(`/`);
-                    }
-                }
+                this.handleAddEdit(m, s);
             })
         }
     };
