@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
 
-import ajax from 'utils/ajax';
+import { BASE_URL, TOKEN } from 'utils/url.js';
 
 class AddBooks extends Component {
     constructor(props) {
@@ -21,19 +21,22 @@ class AddBooks extends Component {
         let { book_id } = this.state;
 
         if (book_id) {
-            ajax({
-                url: '/Books',
-                postUrl: `&book_id=${book_id}`
+
+            fetch(`${BASE_URL}/Books?token=${TOKEN}&book_id=${book_id}`, {
+                method: 'GET'
             })
-            .then(({ s, d })=> {
-                if (s === 's') {
+            .then( (response) => {
+                return response.json();
+            })
+            .then( ({ s, d }) => {
+                if(s === 's') {
                     let { title, description, author } = d;
-                    
+
                     this.setState({
                         title, description, author
-                    });
+                    })
                 }
-            });
+            })
         }
     };
 
@@ -87,22 +90,38 @@ class AddBooks extends Component {
         });
 
         if (book_id) {
-            ajax({
-                url: '/Books',
-                type: 'PUT',
-                data: { book_id, title, description, author }
-            }).then(({ m, s })=> {
 
+            let editData = { book_id, title, description, author };
+            editData.token = TOKEN;
+            // console.log(editData);
+            
+            fetch(`${BASE_URL}/Books`, {
+                method: 'PUT',
+                headers:{ 'Content-Type': 'application/json' },
+                body: JSON.stringify(editData)
+            })
+            .then( (response) => {
+                return response.json();
+            })
+            .then(({ m, s }) => {
                 this.handleAddEdit(m, s);
-            });
+            })
 
         } else {
-            ajax({
-                url: '/Books',
-                type: 'POST',
-                data: { title, description, author }
-            }).then(({ m, s })=> {
-                
+
+            let newData = { title, description, author };
+            newData.token = TOKEN;
+            // console.log(newData);
+            
+            fetch(`${BASE_URL}/Books`, {
+                method: 'POST',
+                headers:{ 'Content-Type': 'application/json' },
+                body: JSON.stringify(newData)
+            })
+            .then( (response) => {
+                return response.json();
+            })
+            .then(({ m, s }) => {
                 this.handleAddEdit(m, s);
             })
         }

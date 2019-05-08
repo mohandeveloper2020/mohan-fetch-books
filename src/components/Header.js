@@ -29,7 +29,7 @@ class Header extends Component {
 
                     <ul className={'nav'}>
                         <li>
-                            {`Stock (${books ? books.length : 'Loading'})`}
+                            {`Stock (${books ? books.length : '...'})`}
                         </li>
                     </ul>                    
                 </nav>

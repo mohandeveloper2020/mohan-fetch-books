@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import ajax from 'utils/ajax';
+import { BASE_URL, TOKEN } from 'utils/url.js';
 
 class ViewBook extends Component {
     constructor(props) {
@@ -15,18 +15,19 @@ class ViewBook extends Component {
 
     componentDidMount() {
         let { book_id } = this.state;
-        // console.log(book_id);
+        // console.log(book_id);          
 
-        ajax({
-            url: '/Books',
-            postUrl: `&book_id=${book_id}`
-        }).then(({ s, d: book })=> {
+        fetch(`${BASE_URL}/Books?token=${TOKEN}&book_id=${book_id}`)
+        .then( (response) => {
+            return response.json();
+        })
+        .then ( ({ s, d}) => {
             if (s === 's') {
                 this.setState({
-                    book
+                    book: d
                 });
-            }
-        });
+            }   
+        })
     };
 
     render() {

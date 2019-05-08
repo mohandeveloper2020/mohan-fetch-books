@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { getBooks } from 'actions/booksAction/';
-import ajax from 'utils/ajax';
+import { BASE_URL, TOKEN } from 'utils/url.js';
 import BookImg from 'images/book_stack.png';
 
 class BooksList extends Component {
@@ -24,33 +24,42 @@ class BooksList extends Component {
         let bookId = book.book_id;
         // console.log(bookId);
 
-        let { books } = this.props;        
+        let { books } = this.props; 
+        // console.log(books);
+
         books.map((b) => {
             if(b.book_id === bookId) {
                 // console.log('inside if');
 
-                ajax({
-                    url: '/Books',
-                    type: 'DELETE',
-                    postUrl: `&book_id=${bookId}`,
-                }).then( ({ m }) => {
-
+                fetch(`${BASE_URL}/Books?token=${TOKEN}&book_id=${bookId}`, {
+                    method: 'DELETE'
+                })
+                .then( (response) => {
+                    return response.json();
+                })
+                .then( ({m}) => {
+                    // console.log(m);
                     if (m && m.length) {
                         alert(`${m} - ${b.title} by ${b.author}`)
                     }
-
                 })
             }
             // console.log(b);
             return b;
         })
+
         // console.log(books);
-        return books;       
+        this.props.getBooks();
+
+        // console.log(books);
+        return books;
+        
     }
 
     componentDidUpdate() {
         // to get the books after add / update / delete
         this.props.getBooks();
+        // console.log('here');
     }
 
     render() {
