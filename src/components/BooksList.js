@@ -24,41 +24,37 @@ class BooksList extends Component {
         let bookId = book.book_id;
         // console.log(bookId);
 
-        let { books } = this.props; 
+        let { books } = this.props;
         // console.log(books);
 
-        books.map((b) => {
-            if(b.book_id === bookId) {
-                // console.log('inside if');
-
-                fetch(`${BASE_URL}/Books?token=${TOKEN}&book_id=${bookId}`, {
-                    method: 'DELETE'
-                })
-                .then( (response) => {
-                    return response.json();
-                })
-                .then( ({m}) => {
-                    // console.log(m);
-                    if (m && m.length) {
-                        alert(`${m} - ${b.title} by ${b.author}`)
-                    }
-                })
-            }
-            // console.log(b);
-            return b;
-        })
-
-        // console.log(books);
-        this.props.getBooks();
-
+        let confirmation = window.confirm('Do you want to delete this book from list?');
+        if(confirmation === true) {
+            books.filter((b) => {
+                  if(b.book_id === bookId) {
+                      // console.log('inside if');
+                      fetch(`${BASE_URL}/Books?token=${TOKEN}&book_id=${bookId}`, {
+                          method: 'DELETE'
+                      })
+                      .then( (response) => {
+                          return response.json();
+                      })
+                      .then( ({m}) => {
+                          // console.log(m);
+                          if (m && m.length) {
+                              alert(`${m} - ${b.title} by ${b.author}`)
+                          }
+                      })
+                  }
+                return b;
+            })
+        }
         // console.log(books);
         return books;
-        
     }
 
     componentDidUpdate() {
         // to get the books after add / update / delete
-        this.props.getBooks();
+        // this.props.getBooks();
         // console.log('here');
     }
 
@@ -73,7 +69,7 @@ class BooksList extends Component {
                     <Link to={'/AddBooks'} className={'ml-3 btn btn-sm btn-info float-right'}>
                         <i className={'fas fa-plus mr-2'}></i>
                         {'Add new'}
-                    </Link>       
+                    </Link>
                 </p>
 
                 <hr />
@@ -86,7 +82,7 @@ class BooksList extends Component {
                                     <h5 className={'mb-0'}>{book.title}</h5>
                                 </div>
                                 <div className={'card-body py-3'}>
-                                    <p className={'card-text'}>{book.description}</p>  
+                                    <p className={'card-text'}>{book.description}</p>
                                     <p className={'card-text font-italic text-muted mb-1'}>{`By: ${book.author}`}</p>
                                 </div>
                                 <div className={'card-footer'}>
@@ -106,8 +102,8 @@ class BooksList extends Component {
                                             <i className={'fas fa-trash'}></i>
                                             {/* {'Delete'} */}
                                     </button>
-                                    
-                                    <Link 
+
+                                    <Link
                                         to={`/ViewBook/${book.book_id}`}
                                         className={'card-link float-right'}
                                         title={'View more about this book'} >
@@ -136,7 +132,7 @@ class BooksList extends Component {
     }
 }
 
-export default connect((state) => 
+export default connect((state) =>
     {
         return {
             books: state.booksData
