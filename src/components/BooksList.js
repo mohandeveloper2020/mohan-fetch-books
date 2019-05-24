@@ -43,6 +43,8 @@ class BooksList extends Component {
                           if (m && m.length) {
                               alert(`${m} - ${b.title} by ${b.author}`)
                           }
+                          // To get the updated list of books after delete
+                          this.props.getBooks();
                       })
                   }
                 return b;
@@ -50,12 +52,6 @@ class BooksList extends Component {
         }
         // console.log(books);
         return books;
-    }
-
-    componentDidUpdate() {
-        // to get the books after add / update / delete
-        // this.props.getBooks();
-        // console.log('here');
     }
 
     render() {
